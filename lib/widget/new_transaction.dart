@@ -1,11 +1,20 @@
+import 'package:fdtcg_expenses/widget/user_transaction.dart';
 import 'package:flutter/material.dart';
 
 
 
-class Newtransaction extends StatelessWidget {
+class NewTransaction extends StatelessWidget {
+
+  /// [Define Function type]
+  final Function addTx;
+
   // const Newtransaction({Key key}) : super(key: key);
   final memoInputController = TextEditingController();
   final amountInputController = TextEditingController();
+
+  NewTransaction(this.addTx);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +47,12 @@ class Newtransaction extends StatelessWidget {
                     /// [by TextEdditingController]
                     print(memoInputController.text);
                     print(amountInputController.text);
+
+                    addTx(
+                      memoInputController.text,
+                      double.parse(amountInputController.text),
+
+                    );
                   },
                 ),
               ],

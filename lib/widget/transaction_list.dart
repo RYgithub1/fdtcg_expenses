@@ -17,49 +17,54 @@ class TransactionList extends StatelessWidget {
   /// [===== build() =====]
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: transactions
-      // children: _userTransactions
-          .map((tx) {
-              return  Card(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.green, width: 2),
-                        ),
-                        child: Text(
-                            // tx.amount.toString(),
-                            "\$${tx.amount}",   /// [\$]
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.green[900],
-                            ),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(   /// [Containerでwrapしてheight指定->listのみscrollable]
+      height: 320,
+      child: SingleChildScrollView(
+        child: Column(
+          children: transactions
+          // children: _userTransactions
+              .map((tx) {
+                  return  Card(
+                      child: Row(
                         children: <Widget>[
-                            Text(
-                                tx.title,
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.green, width: 2),
                             ),
-                            Text(
-                                // tx.date.toString(),
-                                // DateFormat("yyyy/MM/dd").format(tx.date),
-                                DateFormat.yMMMd().format(tx.date),
-                                style: TextStyle(color: Colors.grey),
+                            child: Text(
+                                // tx.amount.toString(),
+                                "\$${tx.amount}",   /// [\$]
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.green[900],
+                                ),
                             ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                                Text(
+                                    tx.title,
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                    // tx.date.toString(),
+                                    // DateFormat("yyyy/MM/dd").format(tx.date),
+                                    DateFormat.yMMMd().format(tx.date),
+                                    style: TextStyle(color: Colors.grey),
+                                ),
+                            ],
+                          ),
                         ],
                       ),
-                    ],
-                  ),
-              );
-          })
-          .toList()
+                  );
+              })
+              .toList()
+        ),
+      ),
     );
   }
 }
