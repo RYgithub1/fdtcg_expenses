@@ -19,12 +19,13 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(   /// [Containerでwrapしてheight指定->listのみscrollable]
       height: 320,
-      child: SingleChildScrollView(
-        child: Column(
-          children: transactions
-          // children: _userTransactions
-              .map((tx) {
-                  return  Card(
+      // child: SingleChildScrollView(
+      // child: Column(
+        // child: ListView(
+        child: ListView.builder(
+          itemCount: transactions.length,
+          itemBuilder: (ctx, index){
+            return Card(
                       child: Row(
                         children: <Widget>[
                           Container(
@@ -35,7 +36,8 @@ class TransactionList extends StatelessWidget {
                             ),
                             child: Text(
                                 // tx.amount.toString(),
-                                "\$${tx.amount}",   /// [\$]
+                                // "\$${tx.amount}",   /// [\$]
+                                "\$${transactions[index].amount}",   /// [\$]
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -47,13 +49,15 @@ class TransactionList extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                                 Text(
-                                    tx.title,
+                                    // tx.title,
+                                    transactions[index].title,
                                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                     // tx.date.toString(),
                                     // DateFormat("yyyy/MM/dd").format(tx.date),
-                                    DateFormat.yMMMd().format(tx.date),
+                                    // DateFormat.yMMMd().format(tx.date),
+                                    DateFormat.yMMMd().format(transactions[index].date),
                                     style: TextStyle(color: Colors.grey),
                                 ),
                             ],
@@ -61,10 +65,50 @@ class TransactionList extends StatelessWidget {
                         ],
                       ),
                   );
-              })
-              .toList()
+          },
+          // children: _userTransactions
+          // children: transactions
+          //     .map((tx) {
+          //         return  Card(
+          //             child: Row(
+          //               children: <Widget>[
+          //                 Container(
+          //                   margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          //                   padding: EdgeInsets.all(8),
+          //                   decoration: BoxDecoration(
+          //                       border: Border.all(color: Colors.green, width: 2),
+          //                   ),
+          //                   child: Text(
+          //                       // tx.amount.toString(),
+          //                       "\$${tx.amount}",   /// [\$]
+          //                       style: TextStyle(
+          //                           fontWeight: FontWeight.bold,
+          //                           fontSize: 20,
+          //                           color: Colors.green[900],
+          //                       ),
+          //                   ),
+          //                 ),
+          //                 Column(
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: <Widget>[
+          //                       Text(
+          //                           tx.title,
+          //                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          //                       ),
+          //                       Text(
+          //                           // tx.date.toString(),
+          //                           // DateFormat("yyyy/MM/dd").format(tx.date),
+          //                           DateFormat.yMMMd().format(tx.date),
+          //                           style: TextStyle(color: Colors.grey),
+          //                       ),
+          //                   ],
+          //                 ),
+          //               ],
+          //             ),
+          //         );
+          //     })
+          //     .toList(),
         ),
-      ),
     );
   }
 }
