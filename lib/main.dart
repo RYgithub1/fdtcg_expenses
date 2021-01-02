@@ -42,6 +42,12 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("MY EXPENSES"),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.attach_money),
+            onPressed: (){},
+          ),
+        ],
       ),
       body: SingleChildScrollView(    /// [Tiger Beat]
         child: Column(
@@ -145,6 +151,43 @@ class MyHomePage extends StatelessWidget {
 
           ],
         ),
+      ),
+
+      bottomNavigationBar: new BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.chat),
+                label: 'chat',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.timeline),
+                label: 'time line',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.info),
+                label: 'news',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: 'search',
+              ),
+        ],
+        elevation: 4,
+        // backgroundColor: Colors.green,
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.lightGreen,
+        currentIndex: 1,
+        onTap: null,
+      ),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.attach_money),
+        onPressed: (){},
       ),
     );
   }
