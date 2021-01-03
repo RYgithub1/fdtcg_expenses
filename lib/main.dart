@@ -2,6 +2,7 @@
 // import 'package:fdtcg_expenses/widget/new_transaction.dart';
 // import 'package:fdtcg_expenses/widget/transaction_list.dart';
 import 'package:fdtcg_expenses/model/transaction.dart';
+import 'package:fdtcg_expenses/widget/chart.dart';
 import 'package:fdtcg_expenses/widget/new_transaction.dart';
 import 'package:fdtcg_expenses/widget/transaction_list.dart';
 import 'package:fdtcg_expenses/widget/user_transaction.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(    /// [Theme Can define App common theme]
         primarySwatch: Colors.lightGreen,
         accentColor: Colors.lightBlue[100],   /// [combi color for FAB]
+        errorColor: Colors.brown[300],
 
         fontFamily: "Quicksand",   /// [Define Basic font theme at root]
         appBarTheme: AppBarTheme(/// [Define peticular font theme here ,or  Define appBarTheme for common appBar]
@@ -67,19 +69,28 @@ class _MyHomePageState extends State<MyHomePage> {
   // final memoInputController = TextEditingController();
   // final amountInputController = TextEditingController();
 
-  final List<Transaction> _userTransactions = [   /// [dammy default expenses]
+  final List<Transaction> _userTransactions = [   /// [dammy default expenses -> Use as a array]
     // Transaction(id: "t1", title: "New Shoes", amount: 66.99, date: DateTime.now()),
     // Transaction(id: "t2", title: "Weekly Groceries", amount: 99.66, date: DateTime.now()),
   ];
-  void _addNewTransaction(String txMemo, double txAmount){
+  List<Transaction> get _recentTransactions {   /// [real expenses]
+    return _userTransactions.where((tx) {
+      return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
+
+  // void _addNewTransaction(String txMemo, double txAmount){
+  void _addNewTransaction(String txMemo, double txAmount, DateTime chosenDate){
     final newTx =  Transaction(
       title: txMemo,
       amount: txAmount,
-      date: DateTime.now(),
+      // date: DateTime.now(),
+      date: chosenDate,
       id: DateTime.now().toString(),
     );
     setState( () {
-      _userTransactions.add(newTx);
+      _userTransactions.add(newTx);   /// [Add to array]
     });
   }
 
@@ -94,6 +105,17 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       },
     );
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) {   /// [Remove from array]
+        return tx.id == id;
+      });
+    });
+
+
+
   }
 
 
@@ -120,14 +142,16 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                elevation: 8,
-                color: Colors.lightGreen[300],
-                child: Text("chart"),
-              ),
-            ),
+            // Container(
+            //   width: double.infinity,
+            //   child: Card(
+            //     elevation: 8,
+            //     color: Colors.lightGreen[300],
+            //     child: Text("chart"),
+            //   ),
+            // ),
+            /// [Get data from chart.dart]
+            Chart(_recentTransactions),
 
             /// [move to new_transaction.dart]
             // Card(
@@ -213,7 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
             // ),
             /// TransactionList(),   /// [transfer to user_transaction.dart]
             /// UserTransaction(),   /// [transfer to user_transaction.dart]
-            TransactionList(_userTransactions), /// [From user_transaction.dart]
+            TransactionList(_userTransactions, _deleteTransaction), /// [From user_transaction.dart]
 
           ],
         ),
