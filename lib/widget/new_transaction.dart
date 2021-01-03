@@ -3,12 +3,19 @@ import 'package:flutter/material.dart';
 
 
 
-class NewTransaction extends StatelessWidget {
-
+// class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
   /// [Define Function type]
   final Function addTx;
   NewTransaction(this.addTx);
 
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+
+
+class _NewTransactionState extends State<NewTransaction> {
   // const Newtransaction({Key key}) : super(key: key);
   final memoInputController = TextEditingController();
   final amountInputController = TextEditingController();
@@ -23,12 +30,16 @@ class NewTransaction extends StatelessWidget {
       return;
     }
 
-    addTx(
+    // addTx(
+    widget.addTx(
       // memoInputController.text,
       // double.parse(amountInputController.text),
       enteredMemo,
       enteredAmount,
     );
+
+    /// [Need Navigator after input expenses info. Back to previous screen]
+    Navigator.of(context).pop();
   }
 
 

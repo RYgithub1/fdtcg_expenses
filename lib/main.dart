@@ -1,6 +1,9 @@
 // import 'package:fdtcg_expenses/model/transaction.dart';
 // import 'package:fdtcg_expenses/widget/new_transaction.dart';
 // import 'package:fdtcg_expenses/widget/transaction_list.dart';
+import 'package:fdtcg_expenses/model/transaction.dart';
+import 'package:fdtcg_expenses/widget/new_transaction.dart';
+import 'package:fdtcg_expenses/widget/transaction_list.dart';
 import 'package:fdtcg_expenses/widget/user_transaction.dart';
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
@@ -15,7 +18,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'expenses',
-      theme: ThemeData(primarySwatch: Colors.lightGreen),
+      theme: ThemeData(    /// [Theme Can define App common theme]
+        primarySwatch: Colors.lightGreen,
+        accentColor: Colors.lightBlue[100],   /// [combi color for FAB]
+      ),
       home: MyHomePage(),
     );
   }
@@ -23,7 +29,16 @@ class MyApp extends StatelessWidget {
 
 
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+
+
+
+class _MyHomePageState extends State<MyHomePage> {
+// class MyHomePage extends StatelessWidget {
   // final List<Transaction> transactionList = [
   //   Transaction(id: "t1", title: "New Shoes", amount: 66.99, date: DateTime.now()),
   //   Transaction(id: "t2", title: "Weekly Groceries", amount: 99.66, date: DateTime.now()),
@@ -33,6 +48,35 @@ class MyHomePage extends StatelessWidget {
   // String amountInput;
   // final memoInputController = TextEditingController();
   // final amountInputController = TextEditingController();
+
+  final List<Transaction> _userTransactions = [
+    Transaction(id: "t1", title: "New Shoes", amount: 66.99, date: DateTime.now()),
+    Transaction(id: "t2", title: "Weekly Groceries", amount: 99.66, date: DateTime.now()),
+  ];
+  void _addNewTransaction(String txMemo, double txAmount){
+    final newTx =  Transaction(
+      title: txMemo,
+      amount: txAmount,
+      date: DateTime.now(),
+      id: DateTime.now().toString(),
+    );
+    setState( () {
+      _userTransactions.add(newTx);
+    });
+  }
+
+  void _startAddNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(   /// [Mod a l]
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: NewTransaction(_addNewTransaction),
+          behavior: HitTestBehavior.opaque,   /// [onTapでのタップ範囲の指定]
+        );
+      },
+    );
+  }
 
 
   /// [===== build() =====]
@@ -45,7 +89,8 @@ class MyHomePage extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.attach_money),
-            onPressed: (){},
+            // onPressed: _startAddNewTransaction,
+            onPressed: () => _startAddNewTransaction(context),   /// [Need Context to show modal forward]
           ),
         ],
       ),
@@ -146,8 +191,8 @@ class MyHomePage extends StatelessWidget {
             //       .toList()
             // ),
             /// TransactionList(),   /// [transfer to user_transaction.dart]
-
-            UserTransaction(),
+            /// UserTransaction(),   /// [transfer to user_transaction.dart]
+            TransactionList(_userTransactions), /// [From user_transaction.dart]
 
           ],
         ),
@@ -187,7 +232,7 @@ class MyHomePage extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.attach_money),
-        onPressed: (){},
+        onPressed: () => _startAddNewTransaction(context),
       ),
     );
   }

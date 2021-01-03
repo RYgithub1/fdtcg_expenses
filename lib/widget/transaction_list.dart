@@ -32,7 +32,12 @@ class TransactionList extends StatelessWidget {
                             margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                             padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.green, width: 2),
+                                // border: Border.all(color: Colors.green, width: 2),
+                                border: Border.all(
+                                  // color: Colors.green,
+                                  color: Theme.of(context).primaryColorDark,  /// [Use context of primaryColor]
+                                  width: 2,
+                                ),
                             ),
                             child: Text(
                                 // tx.amount.toString(),
@@ -43,6 +48,7 @@ class TransactionList extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                     color: Colors.green[900],
+                                    // color: Theme.of(context).primaryColorDark,
                                 ),
                             ),
                           ),

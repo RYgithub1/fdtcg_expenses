@@ -40,7 +40,7 @@ class _UserTransactionState extends State<UserTransaction> {
     return Column(
       children: <Widget>[
         NewTransaction(_addNewTransaction),
-        TransactionList(_userTransactions),
+        /// TransactionList(_userTransactions),  [To main.dart]
       ],
     );
   }
