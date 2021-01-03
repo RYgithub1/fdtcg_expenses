@@ -14,6 +14,7 @@ class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
   TransactionList(this.transactions);
 
+
   /// [===== build() =====]
   @override
   Widget build(BuildContext context) {
@@ -22,100 +23,117 @@ class TransactionList extends StatelessWidget {
       // child: SingleChildScrollView(
       // child: Column(
         // child: ListView(
-        child: ListView.builder(
-          itemCount: transactions.length,
-          itemBuilder: (ctx, index){
-            return Card(
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                // border: Border.all(color: Colors.green, width: 2),
-                                border: Border.all(
-                                  // color: Colors.green,
-                                  color: Theme.of(context).primaryColorDark,  /// [Use context of primaryColor]
-                                  width: 2,
-                                ),
+        child: transactions.isEmpty
+        ? Column(children: <Widget>[
+            SizedBox(height:40),
+            Text(
+                "No transactions added yet.",
+                style: Theme.of(context).textTheme.headline6,
+            ),
+            SizedBox(height:20),
+            Container(
+              height: 240,
+              child: Image.asset(
+                  "assets/images/waiting.png",
+                  fit: BoxFit.cover,   /// [BoxFit with container max size]
+              ),
+            ),
+        ])
+        : ListView.builder(
+            itemCount: transactions.length,
+            itemBuilder: (ctx, index){
+              return Card(
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                  // border: Border.all(color: Colors.green, width: 2),
+                                  border: Border.all(
+                                    // color: Colors.green,
+                                    color: Theme.of(context).primaryColorDark,  /// [Use context of primaryColor]
+                                    width: 2,
+                                  ),
+                              ),
+                              child: Text(
+                                  // tx.amount.toString(),
+                                  // "\$${tx.amount}",   /// [\$]
+                                  // "\$${transactions[index].amount}",
+                                  "\$${transactions[index].amount.toStringAsFixed(2)}",   /// [\$]
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: Colors.green[900],
+                                      // color: Theme.of(context).primaryColorDark,
+                                  ),
+                              ),
                             ),
-                            child: Text(
-                                // tx.amount.toString(),
-                                // "\$${tx.amount}",   /// [\$]
-                                // "\$${transactions[index].amount}",
-                                "\$${transactions[index].amount.toStringAsFixed(2)}",   /// [\$]
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.green[900],
-                                    // color: Theme.of(context).primaryColorDark,
-                                ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                  Text(
+                                      // tx.title,
+                                      transactions[index].title,
+                                      // style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                      style: Theme.of(context).textTheme.headline6,   /// [the way to use context from Root]
+                                  ),
+                                  Text(
+                                      // tx.date.toString(),
+                                      // DateFormat("yyyy/MM/dd").format(tx.date),
+                                      // DateFormat.yMMMd().format(tx.date),
+                                      DateFormat.yMMMd().format(transactions[index].date),
+                                      style: TextStyle(color: Colors.grey),
+                                  ),
+                              ],
                             ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                                Text(
-                                    // tx.title,
-                                    transactions[index].title,
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                    // tx.date.toString(),
-                                    // DateFormat("yyyy/MM/dd").format(tx.date),
-                                    // DateFormat.yMMMd().format(tx.date),
-                                    DateFormat.yMMMd().format(transactions[index].date),
-                                    style: TextStyle(color: Colors.grey),
-                                ),
-                            ],
-                          ),
-                        ],
-                      ),
-                  );
-          },
-          // children: _userTransactions
-          // children: transactions
-          //     .map((tx) {
-          //         return  Card(
-          //             child: Row(
-          //               children: <Widget>[
-          //                 Container(
-          //                   margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          //                   padding: EdgeInsets.all(8),
-          //                   decoration: BoxDecoration(
-          //                       border: Border.all(color: Colors.green, width: 2),
-          //                   ),
-          //                   child: Text(
-          //                       // tx.amount.toString(),
-          //                       "\$${tx.amount}",   /// [\$]
-          //                       style: TextStyle(
-          //                           fontWeight: FontWeight.bold,
-          //                           fontSize: 20,
-          //                           color: Colors.green[900],
-          //                       ),
-          //                   ),
-          //                 ),
-          //                 Column(
-          //                   crossAxisAlignment: CrossAxisAlignment.start,
-          //                   children: <Widget>[
-          //                       Text(
-          //                           tx.title,
-          //                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          //                       ),
-          //                       Text(
-          //                           // tx.date.toString(),
-          //                           // DateFormat("yyyy/MM/dd").format(tx.date),
-          //                           DateFormat.yMMMd().format(tx.date),
-          //                           style: TextStyle(color: Colors.grey),
-          //                       ),
-          //                   ],
-          //                 ),
-          //               ],
-          //             ),
-          //         );
-          //     })
-          //     .toList(),
-        ),
+                          ],
+                        ),
+                    );
+            },
+            // children: _userTransactions
+            // children: transactions
+            //     .map((tx) {
+            //         return  Card(
+            //             child: Row(
+            //               children: <Widget>[
+            //                 Container(
+            //                   margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            //                   padding: EdgeInsets.all(8),
+            //                   decoration: BoxDecoration(
+            //                       border: Border.all(color: Colors.green, width: 2),
+            //                   ),
+            //                   child: Text(
+            //                       // tx.amount.toString(),
+            //                       "\$${tx.amount}",   /// [\$]
+            //                       style: TextStyle(
+            //                           fontWeight: FontWeight.bold,
+            //                           fontSize: 20,
+            //                           color: Colors.green[900],
+            //                       ),
+            //                   ),
+            //                 ),
+            //                 Column(
+            //                   crossAxisAlignment: CrossAxisAlignment.start,
+            //                   children: <Widget>[
+            //                       Text(
+            //                           tx.title,
+            //                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            //                       ),
+            //                       Text(
+            //                           // tx.date.toString(),
+            //                           // DateFormat("yyyy/MM/dd").format(tx.date),
+            //                           DateFormat.yMMMd().format(tx.date),
+            //                           style: TextStyle(color: Colors.grey),
+            //                       ),
+            //                   ],
+            //                 ),
+            //               ],
+            //             ),
+            //         );
+            //     })
+            //     .toList(),
+          ),
     );
   }
 }

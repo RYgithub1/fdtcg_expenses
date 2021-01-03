@@ -21,6 +21,24 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(    /// [Theme Can define App common theme]
         primarySwatch: Colors.lightGreen,
         accentColor: Colors.lightBlue[100],   /// [combi color for FAB]
+
+        fontFamily: "Quicksand",   /// [Define Basic font theme at root]
+        appBarTheme: AppBarTheme(/// [Define peticular font theme here ,or  Define appBarTheme for common appBar]
+          textTheme: ThemeData.light().textTheme.copyWith(
+            headline6: TextStyle(
+              fontFamily: "OpenSands",
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        textTheme: ThemeData.light().textTheme.copyWith(  /// [Define peticular font theme for common]
+          headline6: TextStyle(
+            fontFamily: "OpenSands",
+            fontSize: 16,
+            // fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       home: MyHomePage(),
     );
@@ -49,9 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
   // final memoInputController = TextEditingController();
   // final amountInputController = TextEditingController();
 
-  final List<Transaction> _userTransactions = [
-    Transaction(id: "t1", title: "New Shoes", amount: 66.99, date: DateTime.now()),
-    Transaction(id: "t2", title: "Weekly Groceries", amount: 99.66, date: DateTime.now()),
+  final List<Transaction> _userTransactions = [   /// [dammy default expenses]
+    // Transaction(id: "t1", title: "New Shoes", amount: 66.99, date: DateTime.now()),
+    // Transaction(id: "t2", title: "Weekly Groceries", amount: 99.66, date: DateTime.now()),
   ];
   void _addNewTransaction(String txMemo, double txAmount){
     final newTx =  Transaction(
@@ -84,7 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("MY EXPENSES"),
+        title: Text(
+          "MY EXPENSES",
+          // style: TextStyle(fontFamily: "OpenSands"),  /// [Define peticular font theme here ,or  Define appBarTheme for common appBar]
+        ),
         centerTitle: true,
         actions: [
           IconButton(
