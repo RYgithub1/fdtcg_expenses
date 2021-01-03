@@ -20,7 +20,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(   /// [Containerでwrapしてheight指定->listのみscrollable]
-      height: 320,
+      height: 400,
       // child: SingleChildScrollView(
       // child: Column(
         // child: ListView(

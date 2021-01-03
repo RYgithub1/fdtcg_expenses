@@ -274,11 +274,12 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: null,
       ),
 
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.attach_money),
-        onPressed: () => _startAddNewTransaction(context),
-      ),
+      /// [same function to actions[]]
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.attach_money),
+      //   onPressed: () => _startAddNewTransaction(context),
+      // ),
     );
   }
 }
